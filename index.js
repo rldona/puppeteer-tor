@@ -8,7 +8,7 @@ async function main() {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      '--proxy-server=socks5://127.0.0.1:9052'
+      '--proxy-server=socks5://127.0.0.1:9053'
     ]
   });
 
@@ -25,5 +25,6 @@ async function main() {
 
 //// => 139.47.114.63 (Sabadell)
 //// => 134.209.226.5 (DigitalOcean)
+//// => xxx.xxx.xxx.x (Tor)
 
 main();
