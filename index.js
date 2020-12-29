@@ -6,8 +6,6 @@ async function main() {
   const browser = await puppeteer.launch({
     headless: true,
     args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
       '--proxy-server=socks5://127.0.0.1:9053'
     ]
   });
