@@ -19,6 +19,7 @@ async function main() {
   browser.close();
 }
 
-////=> 139.47.114.63 (static IP)
+//// => 139.47.114.63 (Sabadell)
+//// => 134.209.226.5 (DigitalOcean)
 
 main();
