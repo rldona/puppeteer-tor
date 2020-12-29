@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rldona/puppeteer-tor#readme",
   "dependencies": {
+    "ipify": "^5.0.0",
     "puppeteer": "^5.5.0"
   }
 }

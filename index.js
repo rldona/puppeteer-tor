@@ -1,5 +1,6 @@
 
 const puppeteer = require('puppeteer');
+const ipify = require('ipify');
 
 async function main() {
   const browser = await puppeteer.launch({
@@ -11,9 +12,11 @@ async function main() {
 
   await page.goto('https://api.ipify.org');
 
-  setTimeout(() => {
-    browser.close();
-  }, 5000);
+  const ip = await ipify({ useIPv6: false });
+
+  console.log(ip);
+
+  browser.close();
 }
 
 ////=> 139.47.114.63 (static IP)
