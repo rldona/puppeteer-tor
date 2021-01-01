@@ -14,7 +14,7 @@ async function main(randomNumber) {
 
   const page = await browser.newPage();
 
-  await page.goto('https://ipinfo.io/json', { timeout: 0 });
+  await page.goto('https://www.whatismyip.com', { timeout: 0 });
 
   const content = await page.content();
   const serialized = content.substring(content.indexOf('{'), content.indexOf('}') + 1);
