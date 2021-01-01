@@ -8,7 +8,7 @@ async function main(proxy) {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      `--proxy-server=${proxy.host}:${proxy.port}`
+      // `--proxy-server=${proxy.host}:${proxy.port}`
     ]
   });
 
