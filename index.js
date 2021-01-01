@@ -32,7 +32,7 @@ async function main(randomNumber) {
   for (let id = 0; id < 1000 ; id++) {
     if (id !== 0 && id % 500 === 0) {
       console.log(`[: ${id} :] Ramdonized [: ${id} :]`);
-      randomNumber = Math.floor(Math.random() * (99 - 52 + 1)) + 52;
+      randomNumber = Math.floor(Math.random() * (89 - 52 + 1)) + 52;
     }
 
     console.log(`[==> ${id} <==] Scrapping [==> ${id} <==]`);
