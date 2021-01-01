@@ -8,7 +8,6 @@ async function main(randomNumber) {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      // `--proxy-server=${proxy.host}:${proxy.port}`
       `--proxy-server=socks5://127.0.0.1:90${randomNumber}`
     ]
   });
@@ -17,7 +16,7 @@ async function main(randomNumber) {
 
   const page = await browser.newPage();
 
-  await page.goto('https://whatismycountry.com/');
+  await page.goto('https://whatismycountry.com/', { timeout: 0 });
 
   const result = await page.evaluate(async () => {
     return document.querySelector('h2').textContent;
