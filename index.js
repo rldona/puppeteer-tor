@@ -13,17 +13,7 @@ async function main(randomNumber) {
     ]
   });
 
-  console.log(randomNumber);
-
   const page = await browser.newPage();
-
-  // await page.goto('https://whatismycountry.com/', { timeout: 0 });
-
-  // const result = await page.evaluate(async () => {
-  //   return document.querySelector('h2').textContent;
-  // });
-
-  // console.log(result);
 
   await page.goto('https://ipinfo.io/json', { timeout: 0 });
 
@@ -35,10 +25,6 @@ async function main(randomNumber) {
   await browser.close();
 
 }
-
-//// => 139.47.114.63 (Sabadell)
-//// => 134.209.226.5 (DigitalOcean)
-//// => 185.124.31.83 (Proxy List)
 
 (async () => {
 
