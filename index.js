@@ -16,13 +16,20 @@ async function main(randomNumber) {
 
   const page = await browser.newPage();
 
-  await page.goto('https://whatismycountry.com/', { timeout: 0 });
+  // await page.goto('https://whatismycountry.com/', { timeout: 0 });
 
-  const result = await page.evaluate(async () => {
-    return document.querySelector('h2').textContent;
-  });
+  // const result = await page.evaluate(async () => {
+  //   return document.querySelector('h2').textContent;
+  // });
 
-  console.log(result);
+  // console.log(result);
+
+  await page.goto('https://ipinfo.io/json');
+
+  const content = await page.content();
+  const serialized = content.substring(content.indexOf('{'), content.indexOf('}') + 1);
+
+  console.log(JSON.parse(serialized));
 
   await browser.close();
 
