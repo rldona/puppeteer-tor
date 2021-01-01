@@ -8,7 +8,7 @@ async function main(proxy) {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      // `--proxy-server=${proxy.host}:${proxy.port}`
+      `--proxy-server=${proxy.host}:${proxy.port}`
     ]
   });
 
@@ -37,13 +37,15 @@ async function main(proxy) {
 
   // console.log(proxieList);
 
+  // 80.102.50.2:4145
+
   const randomProxy = {
-    host: '198.50.163.192',
-    port: 3129
+    host: 'socks5://127.0.0.1',
+    port: 9052
   }
 
-  for (let id = 0; id < 100000; id++) {
-    await main(randomProxy);
-  }
+  // for (let id = 0; id < 100000; id++) {
+  await main(randomProxy);
+  // }
 
 })();
