@@ -35,18 +35,7 @@ async function main(randomNumber) {
 }
 
 (async () => {
-  let randomNumber = 52;
-
   for (let id = 0; id < 1000 ; id++) {
-    if (id !== 0 && id % 10 === 0) {
-      console.log(`\n\n[========================================]`);
-      console.log(`[==> ${id} <==]    Ramdonized    [==> ${id} <==]`);
-      console.log(`[========================================]\n`);
-      randomNumber = Math.floor(Math.random() * (99 - 52 + 1)) + 52;
-    }
-
-    console.log(`\n[==> ${id} <==] Scrapping [==> ${id} <==]\n`);
-
-    await main(randomNumber);
+    await main(Math.floor(Math.random() * (72 - 52 + 1)) + 52);
   }
 })();
