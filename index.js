@@ -18,6 +18,8 @@ async function main(randomNumber) {
 
   const h2Tags = await page.$$eval('h2', h2 => h2.length);
 
+  console.log(h2Tags);
+
   await browser.close();
 
 }
