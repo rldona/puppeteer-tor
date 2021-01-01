@@ -12,7 +12,7 @@ async function main(randomNumber) {
     ]
   });
 
-  // const page = await browser.newPage();
+  const page = await browser.newPage();
 
   // await page.setRequestInterception(true);
 
