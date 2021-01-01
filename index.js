@@ -14,6 +14,16 @@ async function main(randomNumber) {
 
   const page = await browser.newPage();
 
+  await page.setRequestInterception(true);
+
+  page.on('request', (request) => {
+      if (request.resourceType() === 'document') {
+          request.continue();
+      } else {
+          request.abort();
+      }
+  });
+
   await page.goto('https://www.filmaffinity.com/es/film335397.html', { timeout: 0 });
 
   const divTags = await page.$$eval('div', div => div.length);
