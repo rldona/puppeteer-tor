@@ -36,12 +36,13 @@ async function main(randomNumber) {
 (async () => {
 
   // const proxieList = await getProxies();
-  const randomNumber = Math.floor(Math.random() * (72 - 52 + 1)) + 52;
+  // const randomNumber = Math.floor(Math.random() * (72 - 52 + 1)) + 52;
   // const randomProxy = proxieList[randomNumber];
 
   // console.log(randomNumber);
 
   for (let id = 0; id < 100; id++) {
+    const randomNumber = Math.floor(Math.random() * (72 - 52 + 1)) + 52;
     await main(randomNumber);
   }
 
