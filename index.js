@@ -44,6 +44,8 @@ async function main(randomNumber) {
       randomNumber = Math.floor(Math.random() * (60 - 52 + 1)) + 52;
     }
 
+    console.log(randomNumber);
+
     console.log(`[==> ${id} <==] Scrapping [==> ${id} <==]`);
 
     await main(randomNumber);
