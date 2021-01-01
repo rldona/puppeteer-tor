@@ -14,12 +14,9 @@ async function main(randomNumber) {
 
   const page = await browser.newPage();
 
-  await page.goto('https://ipinfo.io/json', { timeout: 0 });
+  await page.goto('https://www.filmaffinity.com/es/film335397.html', { timeout: 0 });
 
-  const content = await page.content();
-  const serialized = content.substring(content.indexOf('{'), content.indexOf('}') + 1);
-
-  console.log(JSON.parse(serialized));
+  const h2Tags = await page.$$eval('h2', h2 => h2.length);
 
   await browser.close();
 
