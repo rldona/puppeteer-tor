@@ -12,17 +12,17 @@ async function main(randomNumber) {
     ]
   });
 
-  const page = await browser.newPage();
+  // const page = await browser.newPage();
 
-  await page.setRequestInterception(true);
+  // await page.setRequestInterception(true);
 
-  page.on('request', (request) => {
-      if (request.resourceType() === 'document') {
-          request.continue();
-      } else {
-          request.abort();
-      }
-  });
+  // page.on('request', (request) => {
+  //     if (request.resourceType() === 'document') {
+  //         request.continue();
+  //     } else {
+  //         request.abort();
+  //     }
+  // });
 
   await page.goto('https://whatismycountry.com', { timeout: 0 });
 
