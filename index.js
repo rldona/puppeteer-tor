@@ -8,7 +8,7 @@ async function main(proxy) {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      // `--proxy-server=${proxy.host}:${proxy.port}`
+      `--proxy-server=${proxy.host}:${proxy.port}`
     ]
   });
 
@@ -32,16 +32,18 @@ async function main(proxy) {
 
 (async () => {
 
-  // const proxies = await getProxies();
-  // const randomProxy = proxies[Math.floor(Math.random() * (proxies.length - 0 + 1)) + 0];
+  // const proxieList = await getProxies();
+  // const randomProxy = proxieList[Math.floor(Math.random() * (proxieList.length - 0 + 1)) + 0];
+
+  // console.log(proxieList);
 
   const randomProxy = {
     host: '198.50.163.192',
-    port: '3129'
+    port: 3129
   }
 
-  // for (let id = 0; id < 100000; id++) {
-  await main(randomProxy);
-  // }
+  for (let id = 0; id < 100000; id++) {
+    await main(randomProxy);
+  }
 
 })();
