@@ -27,10 +27,12 @@ async function main(randomNumber) {
 
 (async () => {
 
+  let randomNumber;
+
   for (let id = 0; id < 1000 ; id++) {
     if (id % 50 === 0) {
       console.log(`[:${id}:] Ramdonized [:${id}:]`)
-      const randomNumber = Math.floor(Math.random() * (72 - 52 + 1)) + 52;
+      randomNumber = Math.floor(Math.random() * (72 - 52 + 1)) + 52;
     }
 
     await main(randomNumber);
