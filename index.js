@@ -1,6 +1,6 @@
 
 const puppeteer = require('puppeteer');
-const getProxies = require("get-free-https-proxy");
+// const getProxies = require("get-free-https-proxy");
 
 async function main(proxy) {
   const browser = await puppeteer.launch({
