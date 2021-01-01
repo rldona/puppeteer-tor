@@ -13,6 +13,8 @@ async function main(randomNumber) {
     ]
   });
 
+  console.log(randomNumber);
+
   const page = await browser.newPage();
 
   await page.goto('https://whatismycountry.com/');
