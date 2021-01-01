@@ -35,7 +35,8 @@ async function main(randomNumber) {
 }
 
 (async () => {
-  for (let id = 0; id < 1000 ; id++) {
+  for (let id = 0; id < 10 ; id++) {
     await main(Math.floor(Math.random() * (82 - 52 + 1)) + 52);
   }
+  process.exit(1);
 })();
