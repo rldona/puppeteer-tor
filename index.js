@@ -43,7 +43,7 @@ async function main(randomNumber) {
       console.log(`\n\n[========================================]`);
       console.log(`[==> ${id} <==]    Ramdonized    [==> ${id} <==]`);
       console.log(`[========================================]\n`);
-      randomNumber = Math.floor(Math.random() * (72 - 52 + 1)) + 52;
+      randomNumber = Math.floor(Math.random() * (62 - 52 + 1)) + 52;
     }
 
     console.log(`\n[==> ${id} <==] Scrapping [==> ${id} <==]\n`);
