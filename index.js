@@ -16,9 +16,9 @@ async function main(randomNumber) {
 
   await page.goto('https://www.filmaffinity.com/es/film335397.html', { timeout: 0 });
 
-  const h1Tags = await page.$$eval('h1', h1 => h1.length);
+  const divTags = await page.$$eval('div', div => div.length);
 
-  console.log(h1Tags);
+  console.log(divTags);
 
   await browser.close();
 
