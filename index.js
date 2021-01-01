@@ -8,7 +8,7 @@ async function main(randomNumber) {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      `--proxy-server=socks5://127.0.0.1:9052`
+      `--proxy-server=socks5://127.0.0.1:90${randomNumber}`
     ]
   });
 
@@ -41,7 +41,7 @@ async function main(randomNumber) {
   for (let id = 0; id < 1000 ; id++) {
     if (id !== 0 && id % 500 === 0) {
       console.log(`[: ${id} :] Ramdonized [: ${id} :]`);
-      randomNumber = Math.floor(Math.random() * (53 - 52 + 1)) + 52;
+      randomNumber = Math.floor(Math.random() * (60 - 52 + 1)) + 52;
     }
 
     console.log(`[==> ${id} <==] Scrapping [==> ${id} <==]`);
