@@ -27,16 +27,21 @@ async function main(randomNumber) {
 
 (async () => {
 
-  let rotateNumber = 52;
-
-  for (let id = 0; id < 100000 ; id++) {
-    await main(rotateNumber);
-
-    rotateNumber++;
-
-    if (rotateNumber === 99) {
-      rotateNumber = 52;
-    }
+  for (let id = 0; id < 1000 ; id++) {
+    const randomNumber = Math.floor(Math.random() * (99 - 52 + 1)) + 52;
+    await main(randomNumber);
   }
+
+  // let rotateNumber = 52;
+
+  // for (let id = 0; id < 100000 ; id++) {
+  //   await main(rotateNumber);
+
+  //   rotateNumber++;
+
+  //   if (rotateNumber === 99) {
+  //     rotateNumber = 52;
+  //   }
+  // }
 
 })();
