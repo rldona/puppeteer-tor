@@ -8,7 +8,7 @@ async function main(randomNumber) {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      `--proxy-server=socks4://212.225.146.235:4145`
+      `--proxy-server=socks5://127.0.0.1:9052`
     ]
   });
 
