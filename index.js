@@ -8,7 +8,8 @@ async function main(proxy) {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      `--proxy-server=${proxy.host}:${proxy.port}`
+      // `--proxy-server=${proxy.host}:${proxy.port}`
+      `--proxy-server=socks5://127.0.0.1:90${randomNumber}`
     ]
   });
 
@@ -33,19 +34,13 @@ async function main(proxy) {
 (async () => {
 
   // const proxieList = await getProxies();
-  // const randomProxy = proxieList[Math.floor(Math.random() * (proxieList.length - 0 + 1)) + 0];
+  const randomNumber = Math.floor(Math.random() * (72 - 52 + 1)) + 52;
+  // const randomProxy = proxieList[randomNumber];
 
-  // console.log(proxieList);
+  // console.log(randomNumber);
 
-  // 80.102.50.2:4145
-
-  const randomProxy = {
-    host: 'socks5://127.0.0.1',
-    port: 9052
+  for (let id = 0; id < 100; id++) {
+    await main(randomNumber);
   }
-
-  // for (let id = 0; id < 100000; id++) {
-  await main(randomProxy);
-  // }
 
 })();
