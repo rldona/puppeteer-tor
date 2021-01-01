@@ -24,31 +24,29 @@ async function main(randomNumber) {
       }
   });
 
-  await page.goto('https://www.filmaffinity.com/es/film335397.html', { timeout: 0 });
+  await page.goto('https://whatismycountry.com', { timeout: 0 });
 
-  const divTags = await page.$$eval('div', div => div.length);
+  const h2Tags = await page.$$eval('h2', h2 => (h2[0].textContent).split('Your Country is ')[1]);
 
-  console.log(divTags);
+  console.log(h2Tags);
 
   await browser.close();
 
 }
 
 (async () => {
-
-  let randomNumber;
+  let randomNumber = 52;
 
   for (let id = 0; id < 1000 ; id++) {
-    if (id !== 0 && id % 500 === 0) {
-      console.log(`[: ${id} :] Ramdonized [: ${id} :]`);
-      randomNumber = Math.floor(Math.random() * (60 - 52 + 1)) + 52;
+    if (id !== 0 && id % 10 === 0) {
+      console.log(`\n\n[========================================]`);
+      console.log(`[==> ${id} <==]    Ramdonized    [==> ${id} <==]`);
+      console.log(`[========================================]\n`);
+      randomNumber = Math.floor(Math.random() * (99 - 52 + 1)) + 52;
     }
 
-    console.log(randomNumber);
-
-    console.log(`[==> ${id} <==] Scrapping [==> ${id} <==]`);
+    console.log(`\n[==> ${id} <==] Scrapping [==> ${id} <==]\n`);
 
     await main(randomNumber);
   }
-
 })();
