@@ -30,24 +30,14 @@ async function main(randomNumber) {
   let randomNumber;
 
   for (let id = 0; id < 1000 ; id++) {
-    if (id % 50 === 0) {
-      console.log(`[:${id}:] Ramdonized [:${id}:]`)
-      randomNumber = Math.floor(Math.random() * (72 - 52 + 1)) + 52;
+    if (id !== 0 && id % 500 === 0) {
+      console.log(`[: ${id} :] Ramdonized [: ${id} :]`);
+      randomNumber = Math.floor(Math.random() * (99 - 52 + 1)) + 52;
     }
+
+    console.log(`[==> ${id} <==] Scrapping [==> ${id} <==]`);
 
     await main(randomNumber);
   }
-
-  // let rotateNumber = 52;
-
-  // for (let id = 0; id < 100000 ; id++) {
-  //   await main(rotateNumber);
-
-  //   rotateNumber++;
-
-  //   if (rotateNumber === 99) {
-  //     rotateNumber = 52;
-  //   }
-  // }
 
 })();
