@@ -14,12 +14,21 @@ async function main(randomNumber) {
 
   const page = await browser.newPage();
 
-  await page.goto('https://ipinfo.io/json', { timeout: 0 });
+  await page.setRequestInterception(true);
 
-  const content = await page.content();
-  const serialized = content.substring(content.indexOf('{'), content.indexOf('}') + 1);
+  page.on('request', (request) => {
+      if (request.resourceType() === 'document') {
+          request.continue();
+      } else {
+          request.abort();
+      }
+  });
 
-  console.log(JSON.parse(serialized));
+  await page.goto('https://whatismycountry.com', { timeout: 0 });
+
+  const h2Tags = await page.$$eval('h2', h2 => (h2[0].textContent).split('Your Country is ')[1]);
+
+  console.log(h2Tags);
 
   await browser.close();
 
@@ -30,12 +39,14 @@ async function main(randomNumber) {
   let randomNumber;
 
   for (let id = 0; id < 1000 ; id++) {
-    if (id !== 0 && id % 500 === 0) {
-      console.log(`[: ${id} :] Ramdonized [: ${id} :]`);
+    if (id !== 0 && id % 10 === 0) {
+      console.log(`\n\n[========================================]`);
+      console.log(`[==> ${id} <==]    Ramdonized    [==> ${id} <==]`);
+      console.log(`[========================================]\n`);
       randomNumber = Math.floor(Math.random() * (72 - 52 + 1)) + 52;
     }
 
-    console.log(`[==> ${id} <==] Scrapping [==> ${id} <==]`);
+    console.log(`\n[==> ${id} <==] Scrapping [==> ${id} <==]\n`);
 
     await main(randomNumber);
   }
