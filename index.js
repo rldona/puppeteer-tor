@@ -8,13 +8,13 @@ async function main(randomNumber) {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      `--proxy-server=socks5://127.0.0.1:90${randomNumber}`
+      `--proxy-server=socks4://212.225.146.235:4145`
     ]
   });
 
   const page = await browser.newPage();
 
-  await page.goto('https://www.whatismyip.com', { timeout: 0 });
+  await page.goto('https://ipinfo.io/json', { timeout: 0 });
 
   const content = await page.content();
   const serialized = content.substring(content.indexOf('{'), content.indexOf('}') + 1);
@@ -32,7 +32,7 @@ async function main(randomNumber) {
   for (let id = 0; id < 1000 ; id++) {
     if (id !== 0 && id % 500 === 0) {
       console.log(`[: ${id} :] Ramdonized [: ${id} :]`);
-      randomNumber = Math.floor(Math.random() * (72 - 52 + 1)) + 52;
+      randomNumber = Math.floor(Math.random() * (53 - 52 + 1)) + 52;
     }
 
     console.log(`[==> ${id} <==] Scrapping [==> ${id} <==]`);
