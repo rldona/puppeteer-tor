@@ -27,7 +27,7 @@ async function main(randomNumber) {
 
 (async () => {
 
-  for (let id = 0; id < 100 ; id++) {
+  for (let id = 0; id < 100000 ; id++) {
     const randomNumber = Math.floor(Math.random() * (99 - 52 + 1)) + 52;
     await main(randomNumber);
   }
