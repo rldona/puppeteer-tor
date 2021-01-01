@@ -24,9 +24,9 @@ async function main(randomNumber) {
   //     }
   // });
 
-  await page.goto('https://whatismycountry.com', { timeout: 0 });
+  await page.goto('https://www.filmaffinity.com/es/film335397.html', { timeout: 0 });
 
-  const h2Tags = await page.$$eval('h2', h2 => (h2[0].textContent).split('Your Country is ')[1]);
+  const h2Tags = await page.$$eval('h2', h2 => h2.length);
 
   console.log(h2Tags);
 
