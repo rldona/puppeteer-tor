@@ -2,7 +2,7 @@
 const puppeteer = require('puppeteer');
 // const getProxies = require("get-free-https-proxy");
 
-async function main(proxy) {
+async function main(randomNumber) {
   const browser = await puppeteer.launch({
     headless: true,
     args: [
