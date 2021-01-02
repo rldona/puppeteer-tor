@@ -44,7 +44,7 @@ async function main(id, randomNumber) {
   try {
     const url = `https://www.filmaffinity.com/es/film${id}.html`;
 
-    let browserLoad = await page.goto(url, { waitUntil: 'load', timeout: 0 });
+    let browserLoad = await page.goto(url, { timeout: 0 });
 
     if (browserLoad.status() === 200) {
       const title = await page.evaluate(() => {
