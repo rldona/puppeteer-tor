@@ -9,7 +9,7 @@ admin.initializeApp({
   databaseURL: "https://filmaffinity-api.firebaseio.com"
 });
 
-const reviewsRefTest = admin.firestore().collection(`reviews-es-test`);
+const reviewsRefTest = admin.firestore().collection(`reviews-es`);
 const reviewsRefError = admin.firestore().collection(`reviews-es-error`);
 
 let counter = 0;
@@ -51,7 +51,7 @@ async function main(id, randomNumber) {
         return document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
       });
       console.log(`==> ${id} | ${title} <==`);
-      await reviewsRefTest.doc(`${id}`).set({ title, randomNumber });
+      await reviewsRefTest.doc(`${id}`).set({ title });
       counter++;
     }
 
