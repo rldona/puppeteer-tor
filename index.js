@@ -1,5 +1,16 @@
 
 const puppeteer = require('puppeteer');
+const admin = require("firebase-admin");
+
+const serviceAccount = require("./filmaffinity-api-firebase-adminsdk-hfsxr-99032fbdcb.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://filmaffinity-api.firebaseio.com"
+});
+
+const reviewsRefTest = admin.firestore().collection(`reviews-es-test`);
+const reviewsRefError = admin.firestore().collection(`reviews-es-error`);
 
 let counter = 0;
 
@@ -30,20 +41,27 @@ async function main(id, randomNumber) {
 
   ////
 
-  const url = `https://www.filmaffinity.com/es/film${id}.html`;
+  try {
+    const url = `https://www.filmaffinity.com/es/film${id}.html`;
 
-  let browserLoad = await page.goto(url, { waitUntil: 'load', timeout: 0 });
+    let browserLoad = await page.goto(url, { waitUntil: 'load', timeout: 0 });
 
-  if (browserLoad.status() === 200) {
-    const title = await page.evaluate(() => {
-      return document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
-    });
-    console.log(`==> ${id} | ${title} <==`);
-    counter++;
-  }
+    if (browserLoad.status() === 200) {
+      const title = await page.evaluate(() => {
+        return document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
+      });
+      console.log(`==> ${id} | ${title} <==`);
+      await reviewsRefTest.doc(`${id}`).set({ title, randomNumber });
+      counter++;
+    }
 
-  if (browserLoad.status() === 429) {
-    console.log(`==> CAZADO :( <==`);
+    if (browserLoad.status() === 429) {
+      console.log(`==> CAZADO :( <==`);
+      await reviewsRefError.doc(`${id}`).set({ title, randomNumber, error: 429 });
+    }
+  } catch (error) {
+    console.log(error);
+    await reviewsRefError.doc(`${id}`).set({ title, randomNumber, error });
   }
 
   ////
@@ -54,7 +72,7 @@ async function main(id, randomNumber) {
 
 (async () => {
 
-  for (let id = 116219; id < 200000 ; id++) {
+  for (let id = 100000; id < 200000 ; id++) {
     await main(id, Math.floor(Math.random() * (99 - 52 + 1)) + 52);
   }
 
