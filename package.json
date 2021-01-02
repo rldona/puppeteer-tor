@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rldona/puppeteer-tor#readme",
   "dependencies": {
+    "firebase-admin": "^9.4.2",
     "ipify": "^5.0.0",
     "puppeteer": "^5.5.0",
     "puppeteer-page-proxy": "^1.2.8"
