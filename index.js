@@ -42,6 +42,10 @@ async function main(id, randomNumber) {
     counter++;
   }
 
+  if (browserLoad.status() === 429) {
+    console.log(`==> CAZADO :( <==`);
+  }
+
   ////
 
   await browser.close();
@@ -50,7 +54,7 @@ async function main(id, randomNumber) {
 
 (async () => {
 
-  for (let id = 100000; id < 200000 ; id++) {
+  for (let id = 116219; id < 200000 ; id++) {
     await main(id, Math.floor(Math.random() * (99 - 52 + 1)) + 52);
   }
 
