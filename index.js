@@ -9,9 +9,6 @@ admin.initializeApp({
   databaseURL: "https://filmaffinity-api.firebaseio.com"
 });
 
-const reviewsRefTest = admin.firestore().collection(`reviews-es`);
-const reviewsRefError = ;
-
 const language = 'es';
 
 const config = {
@@ -76,16 +73,16 @@ async function main(id, randomNumber) {
         return document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
       });
       console.log(`==> ${id} | ${title} <==`);
-      await reviewsRefTest.doc(`${id}`).set({ title });
+      await config.firestore.references.normal.doc(`${id}`).set({ title });
     }
 
     if (browserLoad.status() === 429) {
       console.log(`==> CAZADO :( <==`);
-      await reviewsRefError.doc(`${id}`).set({ title, randomNumber, error: 429 });
+      await config.firestore.references.error.doc(`${id}`).set({ title, randomNumber, error: 429 });
     }
   } catch (error) {
     console.log(error);
-    await reviewsRefError.doc(`${id}`).set({ randomNumber, error });
+    await config.firestore.references.error.doc(`${id}`).set({ randomNumber, error });
   }
 
   await browser.close();
