@@ -65,26 +65,23 @@ async function main(id, randomNumber) {
   const url = `https://www.filmaffinity.com/${language}/film${id}.html`;
 
   try {
-    let browserLoad = await page.goto(url, { timeout: 0 });
-    let title;
+    let browserLoad = await page.goto(url, { timeout: 0 }), title;
 
     if (browserLoad.status() === 200) {
       title = await page.evaluate(() => {
         return document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
       });
       await config.firestore.references.normal.doc(`${id}`).set({ title });
+      console.log(`==> ${browserLoad.status()} | ${idd} | ${title} <==`);
     }
 
     if (browserLoad.status() === 429) {
       console.log(new Date());
       process.exit(1);
     }
-
-    console.log(`==> ${browserLoad.status()} | ${id} | ${title} <==`);
-
-    await browser.close();
   } catch (error) {
     await config.firestore.references.error.doc(`${id}`).set({ error: `${error}` });
+  } finally {
     await browser.close();
   }
 }
