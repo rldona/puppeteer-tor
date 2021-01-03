@@ -95,14 +95,18 @@ function delay (time) {
   });
 }
 
+async function sleep (id, reviews, minutes) {
+  if (id % reviews === 0) {
+    console.log(`\n Sleeping ${minutes} minutes...\n`);
+    await delay(60000 * minutes);
+  }
+}
+
 (async () => {
 
   for (let id = config.range.start; id < config.range.end ; id++) {
     const randomNumber = Math.floor(Math.random() * (config.proxy.range.max - config.proxy.range.min + 1)) + config.proxy.range.min;
-    if (id % 1000 === 0) {
-      console.log('\n Sleeping 5 minutes...\n')
-      await delay(300000);
-    }
+    await sleep(id, 1000, 5);
     await main(id, randomNumber);
   }
 
