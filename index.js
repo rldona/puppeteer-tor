@@ -25,9 +25,8 @@ async function main(id, randomNumber) {
     ]
   });
 
-  ////
-
-  const page = await browser.newPage();
+  const context = await browser.createIncognitoBrowserContext();
+  const page = await context.newPage();
 
   await page.setRequestInterception(true);
 
@@ -38,8 +37,6 @@ async function main(id, randomNumber) {
         request.abort();
     }
   });
-
-  ////
 
   try {
     const url = `https://www.filmaffinity.com/es/film${id}.html`;
@@ -63,8 +60,6 @@ async function main(id, randomNumber) {
     console.log(error);
     await reviewsRefError.doc(`${id}`).set({ randomNumber, error });
   }
-
-  ////
 
   await browser.close();
 
