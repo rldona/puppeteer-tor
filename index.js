@@ -77,7 +77,8 @@ async function main(id, randomNumber) {
 
     console.log(`==> ${browserLoad.status()} | ${id} | ${title} <==`);
   } catch (error) {
-    await config.firestore.references.error.doc(`${id}`).set({ randomNumber: randomNumber });
+    console.log(error);
+    next();
   }
 
   await browser.close();
