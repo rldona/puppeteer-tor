@@ -90,10 +90,19 @@ async function main(id, randomNumber) {
 
 }
 
+function delay (time) {
+  return new Promise(resolve => {
+    setTimeout(resolve, time)
+  });
+}
+
 (async () => {
 
   for (let id = config.range.start; id < config.range.end ; id++) {
     const randomNumber = Math.floor(Math.random() * (config.proxy.range.max - config.proxy.range.min + 1)) + config.proxy.range.min;
+    if (id % 10000 === 0) {
+      await delay(1800000);
+    }
     await main(id, randomNumber);
   }
 
