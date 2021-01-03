@@ -61,7 +61,7 @@ async function main(id, randomNumber) {
     }
   } catch (error) {
     console.log(error);
-    await reviewsRefError.doc(`${id}`).set({ title, randomNumber, error });
+    await reviewsRefError.doc(`${id}`).set({ randomNumber, error });
   }
 
   ////
@@ -72,7 +72,7 @@ async function main(id, randomNumber) {
 
 (async () => {
 
-  for (let id = 156511; id < 200000 ; id++) {
+  for (let id = 160228; id < 200000 ; id++) {
     await main(id, Math.floor(Math.random() * (62 - 52 + 1)) + 52);
   }
 
