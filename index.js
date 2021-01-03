@@ -66,20 +66,16 @@ async function main(id, randomNumber) {
   const url = `https://www.filmaffinity.com/${language}/film${id}.html`;
 
   try {
-    let browserLoad = await page.goto(url, { timeout: 50 });
+    let browserLoad = await page.goto(url, { timeout: 0 });
 
     if (browserLoad.status() === 200) {
       const title = await page.evaluate(() => {
         return document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
       });
-      console.log(`==> ${id} | ${title} <==`);
       await config.firestore.references.normal.doc(`${id}`).set({ title });
     }
 
-    if (browserLoad.status() === 429) {
-      console.log(`==> CAZADO :( <==`);
-      await config.firestore.references.error.doc(`${id}`).set({ title, randomNumber, error: 429 });
-    }
+    console.log(`==> ${browserLoad.status()} | ${id} | ${title} <==`);
   } catch (error) {
     await config.firestore.references.error.doc(`${id}`).set({ randomNumber: randomNumber });
   }
