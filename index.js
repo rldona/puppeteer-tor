@@ -36,14 +36,13 @@ const config = {
   }
 }
 
-async function main(id, randomNumber) {
+async function main(id) {
   const browser = await puppeteer.launch({
     headless: config.headless,
     ignoreHTTPSErrors: config.ignoreHTTPSErrors,
     args: [
       '--no-sandbox',
-      '--disable-setuid-sandbox',
-      // `--proxy-server=socks5://127.0.0.1:90${randomNumber}`
+      '--disable-setuid-sandbox'
     ]
   });
 
@@ -72,7 +71,7 @@ async function main(id, randomNumber) {
         return document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
       });
       await config.firestore.references.normal.doc(`${id}`).set({ title });
-      console.log(`==> ${browserLoad.status()} | ${idd} | ${title} <==`);
+      console.log(`==> ${browserLoad.status()} | ${id} | ${title} <==`);
     }
 
     if (browserLoad.status() === 429) {
@@ -102,9 +101,8 @@ async function sleep (minutes, id, reviews) {
 (async () => {
 
   for (let id = config.range.start; id < config.range.end ; id++) {
-    const randomNumber = Math.floor(Math.random() * (config.proxy.range.max - config.proxy.range.min + 1)) + config.proxy.range.min;
     await sleep(5, id, 1000);
-    await main(id, randomNumber);
+    await main(id);
   }
 
   process.exit(1);
