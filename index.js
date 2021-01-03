@@ -82,7 +82,7 @@ async function main(id, randomNumber) {
     }
   } catch (error) {
     console.log(error);
-    await config.firestore.references.error.doc(`${id}`).set({ randomNumber, error });
+    await config.firestore.references.error.doc(`${id}`).set({ randomNumber: randomNumber, error: error });
   }
 
   await browser.close();
