@@ -81,8 +81,7 @@ async function main(id, randomNumber) {
       await config.firestore.references.error.doc(`${id}`).set({ title, randomNumber, error: 429 });
     }
   } catch (error) {
-    console.log(error);
-    await config.firestore.references.error.doc(`${id}`).set({ randomNumber: randomNumber, error: error });
+    await config.firestore.references.error.doc(`${id}`).set({ randomNumber: randomNumber });
   }
 
   await browser.close();
