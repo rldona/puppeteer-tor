@@ -67,9 +67,10 @@ async function main(id, randomNumber) {
 
   try {
     let browserLoad = await page.goto(url, { timeout: 0 });
+    let title;
 
     if (browserLoad.status() === 200) {
-      const title = await page.evaluate(() => {
+      title = await page.evaluate(() => {
         return document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
       });
       await config.firestore.references.normal.doc(`${id}`).set({ title });
@@ -78,7 +79,6 @@ async function main(id, randomNumber) {
     console.log(`==> ${browserLoad.status()} | ${id} | ${title} <==`);
   } catch (error) {
     console.log(error);
-    next();
   }
 
   await browser.close();
