@@ -99,9 +99,9 @@ function delay (time) {
 
   for (let id = config.range.start; id < config.range.end ; id++) {
     const randomNumber = Math.floor(Math.random() * (config.proxy.range.max - config.proxy.range.min + 1)) + config.proxy.range.min;
-    if (id % 5000 === 0) {
-      console.log('\n Sleeping 10 minutes...\n')
-      await delay(900000);
+    if (id % 1000 === 0) {
+      console.log('\n Sleeping 5 minutes...\n')
+      await delay(300000);
     }
     await main(id, randomNumber);
   }
