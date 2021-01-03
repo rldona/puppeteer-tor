@@ -76,6 +76,11 @@ async function main(id, randomNumber) {
       await config.firestore.references.normal.doc(`${id}`).set({ title });
     }
 
+    if (browserLoad.status() === 429) {
+      console.log(new Date());
+      process.exit(1);
+    }
+
     console.log(`==> ${browserLoad.status()} | ${id} | ${title} <==`);
   } catch (error) {
     console.log(error);
