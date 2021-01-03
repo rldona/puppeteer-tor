@@ -72,8 +72,8 @@ async function main(id, randomNumber) {
 
 (async () => {
 
-  for (let id = 131371; id < 200000 ; id++) {
-    await main(id, Math.floor(Math.random() * (99 - 52 + 1)) + 52);
+  for (let id = 156511; id < 200000 ; id++) {
+    await main(id, Math.floor(Math.random() * (62 - 52 + 1)) + 52);
   }
 
   console.log(`\n\n==> Scrappig finished ==> ${counter}/100000 reviews in total <==\n\n`);
