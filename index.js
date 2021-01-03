@@ -10,14 +10,40 @@ admin.initializeApp({
 });
 
 const reviewsRefTest = admin.firestore().collection(`reviews-es`);
-const reviewsRefError = admin.firestore().collection(`reviews-es-error`);
+const reviewsRefError = ;
 
-let counter = 0;
+const language = 'es';
+
+const config = {
+  db: admin.firestore(),
+  headless: true,
+  ignoreHTTPSErrors: true,
+  view: {
+    width: 1024,
+    height: 2500
+  },
+  range: {
+    start: parseInt(process.argv[2]),
+    end: parseInt(process.argv[3])
+  },
+  proxy: {
+    range: {
+      min: 52,
+      max: 62
+    }
+  },
+  firestore: {
+    references: {
+      normal: admin.firestore().collection(`reviews-${language}`),
+      error: admin.firestore().collection(`reviews-${language}-error`)
+    }
+  }
+}
 
 async function main(id, randomNumber) {
   const browser = await puppeteer.launch({
-    headless: true,
-    ignoreHTTPSErrors: true,
+    headless: config.headless,
+    ignoreHTTPSErrors: config.ignoreHTTPSErrors,
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
@@ -27,6 +53,8 @@ async function main(id, randomNumber) {
 
   const context = await browser.createIncognitoBrowserContext();
   const page = await context.newPage();
+
+  await page.setViewport({ width: config.view.width, height: config.view.height });
 
   await page.setRequestInterception(true);
 
@@ -38,9 +66,9 @@ async function main(id, randomNumber) {
     }
   });
 
-  try {
-    const url = `https://www.filmaffinity.com/es/film${id}.html`;
+  const url = `https://www.filmaffinity.com/${language}/film${id}.html`;
 
+  try {
     let browserLoad = await page.goto(url, { timeout: 0 });
 
     if (browserLoad.status() === 200) {
@@ -49,7 +77,6 @@ async function main(id, randomNumber) {
       });
       console.log(`==> ${id} | ${title} <==`);
       await reviewsRefTest.doc(`${id}`).set({ title });
-      counter++;
     }
 
     if (browserLoad.status() === 429) {
@@ -67,11 +94,10 @@ async function main(id, randomNumber) {
 
 (async () => {
 
-  for (let id = 160228; id < 200000 ; id++) {
-    await main(id, Math.floor(Math.random() * (62 - 52 + 1)) + 52);
+  for (let id = config.range.start; id < config.range.end ; id++) {
+    const randomNumber = Math.floor(Math.random() * (config.proxy.range.max - config.proxy.range.min + 1)) + config.proxy.range.min;
+    await main(id, randomNumber);
   }
-
-  console.log(`\n\n==> Scrappig finished ==> ${counter}/100000 reviews in total <==\n\n`);
 
   process.exit(1);
 
