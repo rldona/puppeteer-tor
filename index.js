@@ -44,7 +44,7 @@ async function main(id, randomNumber) {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      `--proxy-server=socks5://127.0.0.1:90${randomNumber}`
+      // `--proxy-server=socks5://127.0.0.1:90${randomNumber}`
     ]
   });
 
