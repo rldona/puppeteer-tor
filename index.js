@@ -81,12 +81,12 @@ async function main(id, randomNumber) {
     }
 
     console.log(`==> ${browserLoad.status()} | ${id} | ${title} <==`);
+
+    await browser.close();
   } catch (error) {
-    console.log(error);
+    await config.firestore.references.error.doc(`${id}`).set({ error: `${error}` });
+    await browser.close();
   }
-
-  await browser.close();
-
 }
 
 function delay (time) {
