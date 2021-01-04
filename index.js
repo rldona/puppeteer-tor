@@ -3,6 +3,8 @@ const puppeteer = require('puppeteer');
 const admin = require("firebase-admin");
 const serviceAccount = require("./filmaffinity-api-firebase-adminsdk-hfsxr-99032fbdcb.json");
 
+const filmaffinityScrapper = require("./filmaffinity-scraper");
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://filmaffinity-api.firebaseio.com"
@@ -64,13 +66,12 @@ async function main(id) {
   const url = `https://www.filmaffinity.com/${language}/film${id}.html`;
 
   try {
-    let browserLoad = await page.goto(url, { timeout: 0 }), title;
+
+    let browserLoad = await page.goto(url, { waitUntil: 'load', timeout: 0 });
 
     if (browserLoad.status() === 200) {
-      title = await page.evaluate(() => {
-        return document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
-      });
-      await config.firestore.references.normal.doc(`${id}`).set({ title });
+      const review = await filmaffinityScrapper.init(page);
+      await config.firestore.references.normal.doc(`${id}`).set({ id, ...review, url });
       console.log(`${browserLoad.status()} | ${id} | ${title}`);
     }
 
@@ -78,6 +79,7 @@ async function main(id) {
       await config.firestore.references.error.doc(`${id}`).set({ date: new Date(), error: 429 });
       pm2.stop('index');
     }
+
   } catch (error) {
     await config.firestore.references.error.doc(`${id}`).set({ error: `${error}` });
   } finally {
@@ -105,28 +107,8 @@ async function sleep (minutes, id, reviews) {
     await main(id);
   }
 
-  // await main(177901);
+  // await main(701512);
 
-  ////
-
-  // const reviews = await admin.firestore().collection(`reviews-${language}`).limit(10).get();
-
-  // let reviewsTotal = [];
-
-  // reviews.docs.forEach((doc) => {
-  //   if (parseInt(doc.id) >= 100000 && parseInt(doc.id) < 200000) {
-  //     console.log(doc.id);
-  //     // await sleep(5, id, 1000);
-  //     // await main(id);
-  //     reviewsTotal.push(doc);
-  //   }
-  // });
-
-  // console.log(reviewsTotal.length);
-
-  ////
-
-  pm2.stop('index');
-  pm2.delete('index');
+  pm2.stop('scrapper');
 
 })();
