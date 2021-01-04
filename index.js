@@ -38,7 +38,7 @@ const config = {
   }
 }
 
-async function main(id) {
+async function main (id) {
   const browser = await puppeteer.launch({
     headless: config.headless,
     ignoreHTTPSErrors: config.ignoreHTTPSErrors,
