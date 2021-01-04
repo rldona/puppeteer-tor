@@ -44,8 +44,6 @@ exports.getFilmaffinityReview = async (page) => {
       genre = reviewGenres[0];
     }
 
-    ////
-
     let profesionalReviewsCounter;
 
     if (document.querySelector('.total-abs') !== null) {
@@ -69,8 +67,6 @@ exports.getFilmaffinityReview = async (page) => {
       profesionalReviewsCounter = null;
     }
 
-    ////
-
     const professionalReviewList = document.querySelectorAll('#pro-reviews li');
 
     let reviewList = [];
@@ -90,8 +86,6 @@ exports.getFilmaffinityReview = async (page) => {
         }
       });
     }
-
-    ////
 
     return {
       title: movieTitle,
@@ -113,10 +107,8 @@ exports.getFilmaffinityReview = async (page) => {
   });
 
   if (result.credits.length > 0 && result.casting.length > 0) {
-    // credits configuration
     result.credits.shift();
 
-    // TODO: hay que eliminar los generos que se cuelan al final
     result.credits = result.credits.filter(val => {
       return result.casting.indexOf(val) == -1;
     });
