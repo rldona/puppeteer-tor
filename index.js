@@ -94,7 +94,7 @@ function delay (time) {
 }
 
 async function sleep (minutes, id, reviews) {
-  if (id % reviews === 0 && id !== 0) {
+  if (id % reviews === 0 && id !== config.range.start) {
     console.log(`\n Sleeping ${minutes} minutes...\n`);
     await delay(60000 * minutes);
   }
