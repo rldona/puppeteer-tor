@@ -78,6 +78,7 @@ async function main (id) {
 
     if (browserLoad.status() === 429) {
       await config.firestore.references.error.doc(`${id}`).set({ date: new Date(), error: 429 });
+      console.log(`\n Sleeping 60 minutes...\n`);
       await delay(60000 * 60);
     }
 
