@@ -72,7 +72,7 @@ async function main (id) {
     if (browserLoad.status() === 200) {
       const review = await filmaffinityScrapper.init(page);
       await config.firestore.references.normal.doc(`${id}`).set({ id, ...review, url });
-      console.log(`${browserLoad.status()} | ${id} | ${title}`);
+      console.log(`${browserLoad.status()} | ${id} | ${review.title}`);
     }
 
     if (browserLoad.status() === 429) {
@@ -106,8 +106,6 @@ async function sleep (minutes, id, reviews) {
     await sleep(5, id, 1000);
     await main(id);
   }
-
-  // await main(701512);
 
   pm2.stop('scrapper');
 
