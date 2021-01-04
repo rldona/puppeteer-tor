@@ -77,7 +77,7 @@ async function main(id) {
 
     if (browserLoad.status() === 429) {
       await config.firestore.references.error.doc(`${id}`).set({ date: new Date(), error: 429 });
-      pm2.stop('index');
+      pm2.stop('scrapper');
     }
 
   } catch (error) {
@@ -94,7 +94,7 @@ function delay (time) {
 }
 
 async function sleep (minutes, id, reviews) {
-  if (id % reviews === 0) {
+  if (id % reviews === 0 && id !== 0) {
     console.log(`\n Sleeping ${minutes} minutes...\n`);
     await delay(60000 * minutes);
   }
