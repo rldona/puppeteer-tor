@@ -71,13 +71,14 @@ async function main (id) {
 
     if (browserLoad.status() === 200) {
       const review = await filmaffinityScrapper.init(page);
-      await config.firestore.references.normal.doc(`${id}`).set({ id, ...review, url });
+      console.log(review);
+      // await config.firestore.references.normal.doc(`${id}`).set({ id, ...review, url });
       console.log(`${browserLoad.status()} | ${id} | ${review.title}`);
     }
 
     if (browserLoad.status() === 429) {
       await config.firestore.references.error.doc(`${id}`).set({ date: new Date(), error: 429 });
-      pm2.stop('scrapper');
+      await delay(60000 * 60);
     }
 
   } catch (error) {
