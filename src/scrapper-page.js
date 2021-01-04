@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-exports.getFilmaffinityReview = async (page) => {
+async function getFilmaffinityReview (page) {
   const result = await page.evaluate(async () => {
     const movieTitle = document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
     const reviewYear = document.querySelector('[itemprop="datePublished"]') ? document.querySelector('[itemprop="datePublished"]').textContent : '';
@@ -138,4 +138,8 @@ exports.getFilmaffinityReview = async (page) => {
   result.professional_reviews = result.professional_reviews.length > 0 ? result.professional_reviews : null;
 
   return result;
+}
+
+module.exports = {
+  getFilmaffinityReview
 }
