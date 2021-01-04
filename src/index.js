@@ -1,8 +1,7 @@
 const pm2 = require('pm2');
 
-const { firestoreInit } = require('../utils/firestore-config');
 const { config, spanish } = require('../config');
-const { sleep } = require('../utils');
+const { firestoreInit, sleep } = require('../utils');
 const { scrapper } = require('./scrapper-config');
 
 (async () => {
