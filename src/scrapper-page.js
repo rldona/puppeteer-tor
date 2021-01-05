@@ -110,11 +110,11 @@ async function getFilmaffinityReview (page) {
     result.credits.shift();
 
     result.credits = result.credits.filter(val => {
-      return result.casting.indexOf(val) == -1;
+      return result.casting.indexOf(val) === -1;
     });
 
     result.credits = result.credits.filter(val => {
-      return result.producer.indexOf(val) == -1;
+      return result.producer.indexOf(val) === -1;
     });
   }
 
