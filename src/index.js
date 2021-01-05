@@ -6,13 +6,14 @@ const { scrapper } = require('./scrapper-config');
 
 (async () => {
 
+  let id = config.range.start;
+
   await firestoreInit();
 
-  for (let id = config.range.start; id < config.range.end ; id++) {
+  while (id <= config.range.end) {
     await sleep(id, config.sleep.multipleCheck, config.sleep.shortMinutes);
     await scrapper(id);
+    const loopCheck = id === config.range.end ? id = config.range.start : id++;
   }
-
-  pm2.delete(spanish.SCRAPPER);
 
 })();
