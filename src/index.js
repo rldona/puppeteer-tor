@@ -6,14 +6,14 @@ const { scrapper } = require('./scrapper-config');
 
 (async () => {
 
-  let id = config.range.start;
+  let id = config.range.start, loopCheck;
 
   await firestoreInit();
 
   while (id <= config.range.end) {
     await sleep(id, config.sleep.multipleCheck, config.sleep.shortMinutes);
     await scrapper(id);
-    const loopCheck = id === config.range.end ? id = config.range.start : id++;
+    loopCheck = id === config.range.end ? id = config.range.start : id++;
   }
 
 })();
