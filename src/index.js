@@ -5,6 +5,9 @@ const { firestoreInit, sleep }      = require('../utils');
 const { scrapper }                  = require('./scrapper-config');
 const { initialize, getCollection } = require('../db/mongodb');
 
+// TODO: convert to TypeScript
+// TODO: add typescript-eslint
+
 (async () => {
 
   const mongodb                = await initialize();
@@ -15,12 +18,12 @@ const { initialize, getCollection } = require('../db/mongodb');
 
   await firestoreInit();
 
-  let id = config.range.start, loopCheck;
+  let index = config.range.start, loopCheck;
 
-  while (id <= config.range.end) {
-    await sleep(id, config.sleep.multipleCheck, config.sleep.shortMinutes);
-    await scrapper(id, mongodbCollection, mongodbCollectionError);
-    loopCheck = id === config.range.end ? id = config.range.start : id++;
+  while (index <= config.range.end) {
+    await sleep(index, config.sleep.multipleCheck, config.sleep.shortMinutes);
+    await scrapper(index, mongodbCollection, mongodbCollectionError);
+    loopCheck = index === config.range.end ? index = config.range.start : index++;
   }
 
 })();
