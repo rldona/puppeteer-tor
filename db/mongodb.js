@@ -1,6 +1,6 @@
-const MongoClient = require("mongodb").MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
-const dbConnectionUrl = "mongodb+srv://rldona:NTkXp5z9nPGkquv2@filmaffinity-db-cluster.qdjua.mongodb.net/filmaffinity-db?retryWrites=true&w=majority";
+const dbConnectionUrl = 'mongodb+srv://rldona:NTkXp5z9nPGkquv2@filmaffinity-db-cluster.qdjua.mongodb.net/filmaffinity-db?retryWrites=true&w=majority';
 
 async function initialize () {
   return await MongoClient.connect(dbConnectionUrl, {
@@ -11,7 +11,7 @@ async function initialize () {
 async function getCollection (dbInstance, dbName, dbCollectionName) {
     const dbObject = dbInstance.db(dbName);
     const dbCollection = dbObject.collection(dbCollectionName);
-    console.log("[MongoDB connection] SUCCESS");
+    console.log(`[MongoDB connection] ==> ${dbCollectionName} ==> SUCCESS`);
     return dbCollection;
 }
 
