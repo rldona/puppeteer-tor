@@ -30,19 +30,12 @@ async function scrapper (id, mongodbCollection, mongodbCollectionError) {
 
   try {
     let browserLoad = await page.goto(url, { waitUntil: spanish.LOAD, timeout: 0 });
-
     if (browserLoad.status() === 200) {
       const review = await getFilmaffinityReview(page);
       const doc = { review: id, ...review, url };
       await admin.firestore().collection(spanish.REVIEWS_NORMAL).doc(`${id}`).set(doc);
       await mongodbCollection.update(doc, doc, { upsert: true });
       console.log(`${browserLoad.status()} | ${id} | ${review.title}`);
-    }
-
-    if (browserLoad.status() === 429) {
-      await admin.firestore().collection(spanish.REVIEWS_ERROR).doc(`${id}`).set({ date: new Date(), error: 429 });
-      console.log(spanish.SLEEP_60_MINUTES);
-      await delay(config.sleep.milisecondsConverter * config.sleep.longMinutes);
     }
   } catch (error) {
     const log = { review: id, error: `${error}` };
