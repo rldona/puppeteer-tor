@@ -19,6 +19,7 @@
   "dependencies": {
     "firebase-admin": "^9.4.2",
     "ipify": "^5.0.0",
+    "mongodb": "^3.6.3",
     "pm2": "^4.5.1",
     "puppeteer": "^5.5.0",
     "puppeteer-page-proxy": "^1.2.8"
