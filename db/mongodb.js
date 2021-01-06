@@ -9,13 +9,13 @@ async function initialize () {
 }
 
 async function getCollection (dbInstance, dbName, dbCollectionName) {
-    const dbObject = dbInstance.db(dbName);
-    const dbCollection = dbObject.collection(dbCollectionName);
-    console.log(`[MongoDB connection] ==> ${dbCollectionName} ==> SUCCESS`);
-    return dbCollection;
+  const dbObject = dbInstance.db(dbName);
+  const dbCollection = dbObject.collection(dbCollectionName);
+  console.log(`[MongoDB connection] ==> ${dbCollectionName} ==> SUCCESS`);
+  return dbCollection;
 }
 
 module.exports = {
-    initialize,
-    getCollection
+  initialize,
+  getCollection
 };
