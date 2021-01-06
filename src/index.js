@@ -1,15 +1,14 @@
 const pm2 = require('pm2');
 
-const { config, spanish } = require('../config');
-const { firestoreInit, sleep } = require('../utils');
-const { scrapper } = require('./scrapper-config');
-
+const { config, spanish }           = require('../config');
+const { firestoreInit, sleep }      = require('../utils');
+const { scrapper }                  = require('./scrapper-config');
 const { initialize, getCollection } = require('../db/mongodb');
 
 (async () => {
 
-  const mongodb = await initialize();
-  const mongodbCollection = await getCollection(mongodb, 'filmaffinity-db', 'reviews-es');
+  const mongodb                = await initialize();
+  const mongodbCollection      = await getCollection(mongodb, 'filmaffinity-db', 'reviews-es');
   const mongodbCollectionError = await getCollection(mongodb, 'filmaffinity-db', 'reviews-es-error');
 
   // NOTE: reference id when the mongodb database started saving documents ==> 280500

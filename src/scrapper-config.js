@@ -1,7 +1,7 @@
-const puppeteer = require('puppeteer');
-const admin = require('firebase-admin');
-const { config, spanish } = require('../config');
-const { delay, getUrl } = require('../utils');
+const puppeteer                 = require('puppeteer');
+const admin                     = require('firebase-admin');
+const { config, spanish }       = require('../config');
+const { delay, getUrl }         = require('../utils');
 const { getFilmaffinityReview } = require('./scrapper-page');
 
 async function scrapper (id, mongodbCollection, mongodbCollectionError) {
@@ -30,7 +30,7 @@ async function scrapper (id, mongodbCollection, mongodbCollectionError) {
     let browserLoad = await page.goto(url, { waitUntil: spanish.LOAD, timeout: 0 });
     if (browserLoad.status() === 200) {
       const review = await getFilmaffinityReview(page);
-      const doc = { review: id, ...review, url };
+      const doc    = { review: id, ...review, url };
       await admin.firestore().collection(spanish.REVIEWS_NORMAL).doc(`${id}`).set(doc);
       await mongodbCollection.update(doc, doc, { upsert: true });
       console.log(`${browserLoad.status()} | ${id} | ${review.title}`);
