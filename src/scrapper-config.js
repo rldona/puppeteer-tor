@@ -1,9 +1,7 @@
 const puppeteer = require('puppeteer');
 const admin = require('firebase-admin');
-
 const { config, spanish } = require('../config');
 const { delay, getUrl } = require('../utils');
-
 const { getFilmaffinityReview } = require('./scrapper-page');
 
 async function scrapper (id, mongodbCollection, mongodbCollectionError) {
@@ -14,10 +12,8 @@ async function scrapper (id, mongodbCollection, mongodbCollectionError) {
   });
 
   const page = await browser.newPage();
-
   await page.setViewport({ width: config.view.width, height: config.view.height });
   await page.setRequestInterception(config.setRequestInterception);
-
   page.on(spanish.REQUEST, (request) => {
     if (request.resourceType() === spanish.DOCUMENT) {
         request.continue();
