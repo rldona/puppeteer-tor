@@ -28,15 +28,19 @@ async function scrapper (id, mongodbCollection, mongodbCollectionError) {
 
   try {
     let browserLoad = await page.goto(url, { waitUntil: spanish.LOAD, timeout: 0 });
+
     if (browserLoad.status() === 200) {
       const review = await getFilmaffinityReview(page);
       const doc    = { review: id, ...review, url };
+
       await admin.firestore().collection(spanish.REVIEWS_NORMAL).doc(`${id}`).set(doc);
       await mongodbCollection.update(doc, doc, { upsert: true });
+
       console.log(`${browserLoad.status()} | ${id} | ${review.title}`);
     }
   } catch (error) {
     const log = { review: id, error: `${error}` };
+
     await admin.firestore().collection(spanish.REVIEWS_ERROR).doc(`${id}`).set(log);
     await mongodbCollectionError.insertOne(log);
   } finally {
