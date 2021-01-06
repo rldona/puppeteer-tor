@@ -9,8 +9,8 @@ async function initialize () {
 }
 
 async function getCollection (dbInstance, dbName, dbCollectionName) {
-  const dbObject = dbInstance.db(dbName);
-  const dbCollection = dbObject.collection(dbCollectionName);
+  const dbObject = await dbInstance.db(dbName);
+  const dbCollection = await dbObject.collection(dbCollectionName);
   console.log(`[MongoDB connection] ==> ${dbCollectionName} ==> SUCCESS`);
   return dbCollection;
 }
