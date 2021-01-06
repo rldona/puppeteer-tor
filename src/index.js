@@ -4,7 +4,7 @@ const { config, spanish } = require('../config');
 const { firestoreInit, sleep } = require('../utils');
 const { scrapper } = require('./scrapper-config');
 
-const { initialize, getCollection } = require('../db');
+const { initialize, getCollection } = require('../db/mongodb');
 
 (async () => {
 

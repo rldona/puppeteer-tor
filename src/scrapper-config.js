@@ -34,7 +34,7 @@ async function scrapper (id, mongodbCollection, mongodbCollectionError) {
     if (browserLoad.status() === 200) {
       const review = await getFilmaffinityReview(page);
       await admin.firestore().collection(spanish.REVIEWS_NORMAL).doc(`${id}`).set({ id, ...review, url });
-      mongodbCollection.update({...review}, {...review}, { upsert: true });
+      await mongodbCollection.update({...review}, {...review}, { upsert: true });
       console.log(`${browserLoad.status()} | ${id} | ${review.title}`);
     }
 
@@ -46,7 +46,7 @@ async function scrapper (id, mongodbCollection, mongodbCollectionError) {
   } catch (error) {
     const log = { id, error: `${error}` };
     await admin.firestore().collection(spanish.REVIEWS_ERROR).doc(`${id}`).set(log);
-    mongodbCollectionError.insertOne(log);
+    await mongodbCollectionError.insertOne(log);
   } finally {
     await browser.close();
   }
