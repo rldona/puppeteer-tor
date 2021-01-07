@@ -14,8 +14,6 @@ const { initialize, getCollection } = require('../db/mongodb');
   const mongodbCollection      = await getCollection(mongodb, 'filmaffinity-db', 'reviews-es');
   const mongodbCollectionError = await getCollection(mongodb, 'filmaffinity-db', 'reviews-es-error');
 
-  // NOTE: reference id when the mongodb database started saving documents ==> 280500
-
   await firestoreInit();
 
   let index = config.range.start, loopCheck;

@@ -1,5 +1,16 @@
 const puppeteer = require('puppeteer');
 
+async function removeLastWhiteSpace (text) {
+  let newText            = text;
+  let titleSize          = newText.length;
+
+  if (newText.substr(titleSize - 1) === ' ' ) {
+    newText = newText.substring(0, titleSize - 1);
+  }
+
+  return newText;
+}
+
 async function getFilmaffinityReview (page) {
   const result = await page.evaluate(async () => {
     const movieTitle        = document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
@@ -8,7 +19,7 @@ async function getFilmaffinityReview (page) {
     const reviewDescription = document.querySelector('[itemprop="description"]') ? document.querySelector('[itemprop="description"]').textContent : '';
     const reviewImage       = document.querySelector('[itemprop="image"]') ? document.querySelector('[itemprop="image"]').outerHTML.split(' ')[4].replace('src="', '').replace('"', '') : '';
     const ratingAverage     = document.querySelector('#movie-rat-avg') ? document.querySelector('#movie-rat-avg').getAttribute('content') : '';
-    const ratingCount       = document.querySelector('#movie-count-rat > span') ? document.querySelector('#movie-count-rat > span').textContent : '';
+    const ratingCount       = document.querySelector('#movie-count-rat > span') ? document.querySelector('#movie-count-rat > span').getAttribute('content') : '';
 
     const createList = async (docList) => {
       let list = [];
@@ -117,6 +128,8 @@ async function getFilmaffinityReview (page) {
       return result.producer.indexOf(val) === -1;
     });
   }
+
+  result.title = await removeLastWhiteSpace(result.title);
 
   const hasCountryImg         = await page.$('#country-img > img');
 
