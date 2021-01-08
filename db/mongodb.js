@@ -15,6 +15,25 @@ async function getCollection (dbInstance, dbName, dbCollectionName) {
   return dbCollection;
 }
 
+async function updateDocumentFromCollection (collection, id, review, lastModified) {
+  await collection.updateOne (
+    { 'index': id }, {
+      $set: {
+        'sinopsis': review.sinopsis,
+        'rating_average': review.rating_average,
+        'rating_count': review.rating_count,
+        'professional_register': review.professional_register,
+        'professional_reviews': review.professional_reviews,
+        'thumbnail_medium': review.thumbnail_medium,
+        'thumbnail_large': review.thumbnail_large
+      },
+      $currentDate: {
+        'lastModified': lastModified
+      }
+    }
+  )
+}
+
 /**
  *
  * @param {*} fildObj
@@ -33,5 +52,6 @@ async function renameFieldFromCollection (fildObj, dbCollectionName) {
 module.exports = {
   initialize,
   getCollection,
+  updateDocumentFromCollection,
   renameFieldFromCollection
 };

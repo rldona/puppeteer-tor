@@ -1,8 +1,9 @@
-const puppeteer                 = require('puppeteer');
-const admin                     = require('firebase-admin');
-const { config, spanish }       = require('../config');
-const { delay, getUrl }         = require('../utils');
-const { getFilmaffinityReview } = require('./scrapper-page');
+const puppeteer                        = require('puppeteer');
+const admin                            = require('firebase-admin');
+const { config, spanish }              = require('../config');
+const { delay, getUrl }                = require('../utils');
+const { getFilmaffinityReview }        = require('./scrapper-page');
+const { updateDocumentFromCollection } = require('../db/mongodb');
 
 async function scrapper (index, mongodbCollection, mongodbCollectionError) {
   const browser = await puppeteer.launch({
@@ -18,9 +19,9 @@ async function scrapper (index, mongodbCollection, mongodbCollectionError) {
 
   page.on(spanish.REQUEST, (request) => {
     if (request.resourceType() === spanish.DOCUMENT) {
-        request.continue();
+      request.continue();
     } else {
-        request.abort();
+      request.abort();
     }
   });
 
@@ -32,31 +33,15 @@ async function scrapper (index, mongodbCollection, mongodbCollectionError) {
     if (browserLoad.status() === 200) {
       const review = await getFilmaffinityReview(page);
       const doc    = { index, ...review, url };
-
-      await admin.firestore().collection(spanish.REVIEWS_NORMAL).doc(`${index}`).set(doc);
-
-      const item = await mongodbCollection.find({ index : index }).limit(1).count();
+      const item   = await mongodbCollection.find({ 'index' : index }).limit(1).count();
 
       if (item) {
-        mongodbCollection.updateOne (
-          { index: index }, {
-            $set: {
-              "sinopsis": review.sinopsis,
-              "rating_average": review.rating_average,
-              "rating_count": review.rating_count,
-              "professional_register": review.professional_register,
-              "professional_reviews": review.professional_reviews,
-              "thumbnail_medium": review.thumbnail_medium,
-              "thumbnail_large": review.thumbnail_large
-            },
-            $currentDate: {
-              lastModified: true
-            }
-          }
-       )
+        await updateDocumentFromCollection(mongodbCollection, index, review, true);
       } else {
         await mongodbCollection.insertOne(doc);
       }
+
+      await admin.firestore().collection(spanish.REVIEWS_NORMAL).doc(`${index}`).set(doc);
 
       console.log(`${browserLoad.status()} | ${index} | ${review.title}`);
     }

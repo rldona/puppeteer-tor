@@ -14,16 +14,12 @@ const { initialize, getCollection } = require('../db/mongodb');
   const mongodbCollection      = await getCollection(mongodb, 'filmaffinity-db', 'reviews-es');
   const mongodbCollectionError = await getCollection(mongodb, 'filmaffinity-db', 'reviews-es-error');
 
-  // const mongodbCollection      = await getCollection(mongodb, 'filmaffinity-db', 'reviews-test');
-  // const mongodbCollectionError = await getCollection(mongodb, 'filmaffinity-db', 'reviews-test-error');
-
   await firestoreInit();
 
   let index = config.range.start, loopCheck;
 
   while (index <= config.range.end) {
     await sleep(index, config.sleep.multipleCheck, config.sleep.shortMinutes);
-    await scrapper(index, mongodbCollection, mongodbCollectionError);
     await scrapper(index, mongodbCollection, mongodbCollectionError);
     loopCheck = index === config.range.end ? index = config.range.start : index++;
   }
