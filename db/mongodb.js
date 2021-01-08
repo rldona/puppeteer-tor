@@ -2,12 +2,21 @@ const MongoClient     = require('mongodb').MongoClient;
 
 const dbConnectionUrl = 'mongodb+srv://rldona:NTkXp5z9nPGkquv2@filmaffinity-db-cluster.qdjua.mongodb.net/filmaffinity-db?retryWrites=true&w=majority';
 
+/**
+ * Connect to MongoDB Cloud (Atlas)
+ */
 async function initialize () {
   return await MongoClient.connect(dbConnectionUrl, {
     useUnifiedTopology: true
   });
 }
 
+/**
+ *
+ * @param {*} dbInstance
+ * @param {*} dbName
+ * @param {*} dbCollectionName
+ */
 async function getCollection (dbInstance, dbName, dbCollectionName) {
   const dbObject     = await dbInstance.db(dbName);
   const dbCollection = await dbObject.collection(dbCollectionName);
@@ -15,6 +24,13 @@ async function getCollection (dbInstance, dbName, dbCollectionName) {
   return dbCollection;
 }
 
+/**
+ *
+ * @param {*} collection
+ * @param {*} id
+ * @param {*} review
+ * @param {*} lastModified
+ */
 async function updateDocumentFromCollection (collection, id, review, lastModified) {
   await collection.updateOne (
     { 'index': id }, {

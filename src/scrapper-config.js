@@ -5,6 +5,12 @@ const { delay, getUrl }                = require('../utils');
 const { getFilmaffinityReview }        = require('./scrapper-page');
 const { updateDocumentFromCollection } = require('../db/mongodb');
 
+/**
+ *
+ * @param {*} index
+ * @param {*} mongodbCollection
+ * @param {*} mongodbCollectionError
+ */
 async function scrapper (index, mongodbCollection, mongodbCollectionError) {
   const browser = await puppeteer.launch({
     headless: config.headless,

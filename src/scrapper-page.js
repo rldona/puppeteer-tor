@@ -1,5 +1,9 @@
 const puppeteer = require('puppeteer');
 
+/**
+ *
+ * @param {*} text
+ */
 async function removeLastWhiteSpace (text) {
   let newText            = text;
   let titleSize          = newText.length;
@@ -11,6 +15,10 @@ async function removeLastWhiteSpace (text) {
   return newText;
 }
 
+/**
+ *
+ * @param {*} page
+ */
 async function getFilmaffinityReview (page) {
   const result = await page.evaluate(async () => {
     const movieTitle        = document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
