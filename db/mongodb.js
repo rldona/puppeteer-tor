@@ -15,7 +15,23 @@ async function getCollection (dbInstance, dbName, dbCollectionName) {
   return dbCollection;
 }
 
+/**
+ *
+ * @param {*} fildObj
+ * @param {*} dbCollectionName
+ *
+ * Example filedObj:
+ *
+ * { "index": "id" }
+ * { "index": "id", "rating_average": "ratingAverage" }
+ *
+ */
+async function renameFieldFromCollection (fildObj, dbCollectionName) {
+  await dbCollectionName.updateMany( {}, { $rename: fildObj } );
+}
+
 module.exports = {
   initialize,
-  getCollection
+  getCollection,
+  renameFieldFromCollection
 };

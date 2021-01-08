@@ -4,6 +4,9 @@ const { config, spanish }       = require('../config');
 const { delay, getUrl }         = require('../utils');
 const { getFilmaffinityReview } = require('./scrapper-page');
 
+
+
+
 async function scrapper (index, mongodbCollection, mongodbCollectionError) {
   const browser = await puppeteer.launch({
     headless: config.headless,
@@ -34,13 +37,34 @@ async function scrapper (index, mongodbCollection, mongodbCollectionError) {
       const doc    = { index, ...review, url };
 
       await admin.firestore().collection(spanish.REVIEWS_NORMAL).doc(`${index}`).set(doc);
-      await mongodbCollection.update(doc, doc, { upsert: true });
+
+      const item = await mongodbCollection.find({ index : index }).limit(1).count();
+
+      if (item) {
+        mongodbCollection.updateOne (
+          { index: index }, {
+            $set: {
+              "sinopsis": review.sinopsis,
+              "rating_average": review.rating_average,
+              "rating_count": review.rating_count,
+              "professional_register": review.professional_register,
+              "professional_reviews": review.professional_reviews,
+              "thumbnail_medium": review.thumbnail_medium,
+              "thumbnail_large": review.thumbnail_large
+            },
+            $currentDate: {
+              lastModified: true
+            }
+          }
+       )
+      } else {
+        await mongodbCollection.insertOne(doc);
+      }
 
       console.log(`${browserLoad.status()} | ${index} | ${review.title}`);
     }
   } catch (error) {
     const log = { index, error: `${error}` };
-
     await admin.firestore().collection(spanish.REVIEWS_ERROR).doc(`${index}`).set(log);
     await mongodbCollectionError.insertOne(log);
   } finally {
