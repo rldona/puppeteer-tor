@@ -4,9 +4,6 @@ const { config, spanish }       = require('../config');
 const { delay, getUrl }         = require('../utils');
 const { getFilmaffinityReview } = require('./scrapper-page');
 
-
-
-
 async function scrapper (index, mongodbCollection, mongodbCollectionError) {
   const browser = await puppeteer.launch({
     headless: config.headless,
