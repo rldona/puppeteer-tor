@@ -5,8 +5,8 @@ const puppeteer = require('puppeteer');
  * @param {*} text
  */
 async function removeLastWhiteSpace (text) {
-  let newText            = text;
-  let titleSize          = newText.length;
+  let newText = text;
+  let titleSize = newText.length;
 
   if (newText.substr(titleSize - 1) === ' ' ) {
     newText = newText.substring(0, titleSize - 1);
@@ -21,13 +21,13 @@ async function removeLastWhiteSpace (text) {
  */
 async function getFilmaffinityReview (page) {
   const result = await page.evaluate(async () => {
-    const movieTitle        = document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
-    const reviewYear        = document.querySelector('[itemprop="datePublished"]') ? document.querySelector('[itemprop="datePublished"]').textContent : '';
-    const reviewDuration    = document.querySelector('[itemprop="duration"]') ? document.querySelector('[itemprop="duration"]').textContent : '';
+    const movieTitle = document.querySelector('[itemprop="name"]') ? document.querySelector('[itemprop="name"]').textContent : '';
+    const reviewYear = document.querySelector('[itemprop="datePublished"]') ? document.querySelector('[itemprop="datePublished"]').textContent : '';
+    const reviewDuration = document.querySelector('[itemprop="duration"]') ? document.querySelector('[itemprop="duration"]').textContent : '';
     const reviewDescription = document.querySelector('[itemprop="description"]') ? document.querySelector('[itemprop="description"]').textContent : '';
-    const reviewImage       = document.querySelector('[itemprop="image"]') ? document.querySelector('[itemprop="image"]').outerHTML.split(' ')[4].replace('src="', '').replace('"', '') : '';
-    const ratingAverage     = document.querySelector('#movie-rat-avg') ? document.querySelector('#movie-rat-avg').getAttribute('content') : '';
-    const ratingCount       = document.querySelector('#movie-count-rat > span') ? document.querySelector('#movie-count-rat > span').getAttribute('content') : '';
+    const reviewImage = document.querySelector('[itemprop="image"]') ? document.querySelector('[itemprop="image"]').outerHTML.split(' ')[4].replace('src="', '').replace('"', '') : '';
+    const ratingAverage = document.querySelector('#movie-rat-avg') ? document.querySelector('#movie-rat-avg').getAttribute('content') : '';
+    const ratingCount = document.querySelector('#movie-count-rat > span') ? document.querySelector('#movie-count-rat > span').getAttribute('content') : '';
 
     const createList = async (docList) => {
       let list = [];
@@ -41,9 +41,9 @@ async function getFilmaffinityReview (page) {
     }
 
     const reviewDirectors = await createList(document.querySelectorAll('.directors > .credits > .nb > a'));
-    const reviewCredits   = await createList(document.querySelectorAll('.nb'));
-    const reviewCasting   = await createList(document.querySelectorAll('.card-cast > .credits > .nb > a'));
-    const reviewProducer  = await createList(document.querySelectorAll('.card-producer > .credits > .nb'));
+    const reviewCredits = await createList(document.querySelectorAll('.nb'));
+    const reviewCasting = await createList(document.querySelectorAll('.card-cast > .credits > .nb > a'));
+    const reviewProducer = await createList(document.querySelectorAll('.card-producer > .credits > .nb'));
 
     let reviewGenres = [];
 
@@ -92,8 +92,8 @@ async function getFilmaffinityReview (page) {
 
     if (professionalReviewList.length > 0) {
       professionalReviewList.forEach(review => {
-        let reviewBody       = review.querySelector('[itemprop="reviewBody"]');
-        let reviewAuthor     = review.querySelector('.pro-crit-med');
+        let reviewBody = review.querySelector('[itemprop="reviewBody"]');
+        let reviewAuthor = review.querySelector('.pro-crit-med');
         let reviewEvaluation = review.querySelector('.pro-crit-med > i');
 
         if (reviewBody && reviewAuthor) {
@@ -139,23 +139,23 @@ async function getFilmaffinityReview (page) {
 
   result.title = await removeLastWhiteSpace(result.title);
 
-  const hasCountryImg         = await page.$('#country-img > img');
+  const hasCountryImg = await page.$('#country-img > img');
 
-  result.title                = result.title !== '' ? result.title : null;
-  result.duration             = result.duration !== '' ? parseInt(result.duration.split(' ')[0]) : null;
-  result.year                 = result.year !== '' ? parseInt(result.year) : null;
-  result.country              = hasCountryImg ? await page.$eval('#country-img > img', span => span.getAttribute('title')) : null;
-  result.directors            = result.directors.length > 0 ? result.directors : null;
-  result.credits              = result.credits.length > 0 ? result.credits : null;
-  result.casting              = result.casting.length > 0 ? result.casting : null;
-  result.producer             = result.producer.length > 0 ? result.producer : null;
-  result.genre                = result.genre !== '' ? result.genre : null;
-  result.genres               = result.genres.length > 0 ? result.genres : null;
-  result.sinopsis             = result.sinopsis !== '' ? result.sinopsis.replace('(FILMAFFINITY)', '') : null;
-  result.thumbnail_medium     = result.thumbnail_medium !== '' ? result.thumbnail_medium : null;
-  result.thumbnail_large      = result.thumbnail_medium ? result.thumbnail_medium.replace("mmed", "large") : null;
-  result.rating_average       = result.rating_average !== '' ? parseFloat(result.rating_average) : null;
-  result.rating_count         = result.rating_count ? parseInt(result.rating_count) : null;
+  result.title = result.title !== '' ? result.title : null;
+  result.duration = result.duration !== '' ? parseInt(result.duration.split(' ')[0]) : null;
+  result.year = result.year !== '' ? parseInt(result.year) : null;
+  result.country = hasCountryImg ? await page.$eval('#country-img > img', span => span.getAttribute('title')) : null;
+  result.directors = result.directors.length > 0 ? result.directors : null;
+  result.credits = result.credits.length > 0 ? result.credits : null;
+  result.casting = result.casting.length > 0 ? result.casting : null;
+  result.producer = result.producer.length > 0 ? result.producer : null;
+  result.genre = result.genre !== '' ? result.genre : null;
+  result.genres = result.genres.length > 0 ? result.genres : null;
+  result.sinopsis = result.sinopsis !== '' ? result.sinopsis.replace('(FILMAFFINITY)', '') : null;
+  result.thumbnail_medium = result.thumbnail_medium !== '' ? result.thumbnail_medium : null;
+  result.thumbnail_large = result.thumbnail_medium ? result.thumbnail_medium.replace("mmed", "large") : null;
+  result.rating_average = result.rating_average !== '' ? parseFloat(result.rating_average) : null;
+  result.rating_count = result.rating_count ? parseInt(result.rating_count) : null;
   result.professional_reviews = result.professional_reviews.length > 0 ? result.professional_reviews : null;
 
   return result;

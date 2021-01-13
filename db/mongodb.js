@@ -1,4 +1,4 @@
-const MongoClient     = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
 const dbConnectionUrl = 'mongodb+srv://rldona:NTkXp5z9nPGkquv2@filmaffinity-db-cluster.qdjua.mongodb.net/filmaffinity-db?retryWrites=true&w=majority';
 

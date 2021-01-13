@@ -1,8 +1,9 @@
-const puppeteer                        = require('puppeteer');
-const admin                            = require('firebase-admin');
-const { config, spanish }              = require('../config');
-const { delay, getUrl }                = require('../utils');
-const { getFilmaffinityReview }        = require('./scrapper-page');
+const puppeteer = require('puppeteer');
+const admin = require('firebase-admin');
+
+const { config, spanish } = require('../config');
+const { getUrl } = require('../utils');
+const { getFilmaffinityReview } = require('./scrapper-page');
 const { updateDocumentFromCollection } = require('../db/mongodb');
 
 /**
