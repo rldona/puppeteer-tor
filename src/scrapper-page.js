@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 
+// TODO: hacer una clase con todo este código (ES6)
+
 /**
  *
  * @param {*} text

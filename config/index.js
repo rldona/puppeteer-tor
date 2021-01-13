@@ -5,9 +5,7 @@ const spanish = {
   'DOCUMENT': 'document',
   'SCRAPPER': 'scrapper',
   'LOAD': 'load',
-  'SLEEP_60_MINUTES': `\n Sleeping 60 minutes...\n`,
-  'REVIEWS_NORMAL': `reviews-${language}`,
-  'REVIEWS_ERROR': `reviews-${language}-error`,
+  'SLEEP_60_MINUTES': `\n Sleeping 60 minutes...\n`
 }
 
 const config = {
@@ -39,6 +37,15 @@ const config = {
     longMinutes: 60,
     multipleCheck: 1000,
     milisecondsConverter: 60000
+  },
+  mongodb: {
+    database: 'filmaffinity-db',
+    collection: `reviews-${language}-pepe`,
+    collectionError: `reviews-${language}-pepe-error`
+  },
+  firestore: {
+    collection: `reviews-${language}`,
+    collectionError: `reviews-${language}-error`
   }
 }
 
