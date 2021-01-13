@@ -2,7 +2,7 @@
   "name": "puppeteer-tor",
   "version": "1.0.0",
   "description": "POC: using puppeteer with tor how proxy",
-  "main": "index.js",
+  "main": "batch-long.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rldona/puppeteer-tor#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "firebase-admin": "^9.4.2",
     "ipify": "^5.0.0",
     "mongodb": "^3.6.3",

@@ -5,17 +5,6 @@ const { firestoreInit, sleep }      = require('../utils');
 const { scrapper }                  = require('./scrapper-config');
 const { initialize, getCollection } = require('../db/mongodb');
 
-// TODO: cambiar el nombre del respositorio => filmaffinity-scrapper-batch
-//
-// Project Filmaffinity Scrapper:
-//
-// filmaffinity-scrapper-batch
-// filmaffinity-scrapper-function
-// filmaffinity-scrapper-api
-//
-// TODO: unificar todo en un único repositiorio
-//
-
 (async () => {
 
   const mongodb                = await initialize();
