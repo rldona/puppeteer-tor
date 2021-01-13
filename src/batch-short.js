@@ -1,7 +1,7 @@
 const admin = require('firebase-admin');
 const axios = require('axios');
 
-const { config, spanish } = require('../config');
+const { config } = require('../config');
 const { firestoreInit } = require('../utils');
 const { initialize, getCollection, updateDocumentFromCollection } = require('../db/mongodb');
 
@@ -22,7 +22,6 @@ function getCloudFunctionUrl (index) {
   const reviews = await mongodbCollection.find({});
 
   reviews.each(async (err, doc) => {
-    console.log(doc);
     if (err) {
       const errorLog = { index: doc.index, error: `${error}` };
       await mongodbCollectionError.insertOne(errorLog);
