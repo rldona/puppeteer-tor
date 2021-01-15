@@ -65,16 +65,9 @@ async function renameFieldFromCollection (fildObj, dbCollectionName) {
   await dbCollectionName.updateMany( {}, { $rename: fildObj } );
 }
 
-// async function mongodbInit () {
-//   const mongodb = await initialize();
-//   const mongodbCollection = await getCollection(mongodb, config.db.config.database, config.db.config.collection);
-//   const mongodbCollectionError = await getCollection(mongodb, config.db.config.database, config.db.config.collectionError);
-// }
-
 module.exports = {
   initialize,
   getCollection,
   updateDocumentFromCollection,
-  renameFieldFromCollection,
-  // mongodbInit
+  renameFieldFromCollection
 };

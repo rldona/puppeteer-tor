@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer');
-const admin = require('firebase-admin');
 
 const { config, spanish } = require('../config');
 const { getUrl } = require('../utils');
@@ -40,7 +39,6 @@ async function scrapper (index, mongodbCollection, mongodbCollectionError) {
     if (browserLoad.status() === 200) {
       const review = await getFilmaffinityReview(page);
       const doc = { index, ...review, url };
-
       const item = await mongodbCollection.find({ 'index' : index }).limit(1).count();
 
       if (item) {
@@ -49,13 +47,10 @@ async function scrapper (index, mongodbCollection, mongodbCollectionError) {
         await mongodbCollection.insertOne(doc);
       }
 
-      await admin.firestore().collection(config.firestore.collection).doc(`${index}`).set(doc);
-
       console.log(`${browserLoad.status()} | ${index} | ${review.title}`);
     }
   } catch (error) {
     const log = { index, error: `${error}` };
-    await admin.firestore().collection(config.firestore.collectionError).doc(`${index}`).set(log);
     await mongodbCollectionError.insertOne(log);
   } finally {
     await browser.close();

@@ -40,12 +40,9 @@ const config = {
   },
   mongodb: {
     database: 'filmaffinity-db',
-    collection: `reviews-${language}-pepe`,
-    collectionError: `reviews-${language}-pepe-error`
-  },
-  firestore: {
     collection: `reviews-${language}`,
-    collectionError: `reviews-${language}-error`
+    collectionError: `reviews-${language}-error`,
+    collectionUpdatedError: `reviews-${language}-updated-error`
   }
 }
 

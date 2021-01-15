@@ -1,16 +1,4 @@
-const admin = require('firebase-admin');
 const { config } = require('../config');
-const serviceAccount = require('../secrets/filmaffinity-api-firebase-adminsdk-hfsxr-99032fbdcb.json');
-
-/**
- * Initialize Firebase
- */
-async function firestoreInit () {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: config.databaseURL
-  });
-}
 
 /**
  *
@@ -44,7 +32,6 @@ async function sleep (id, multipleCheck, minutes) {
 }
 
 module.exports = {
-  firestoreInit,
   getUrl,
   delay,
   sleep

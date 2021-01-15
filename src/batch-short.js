@@ -1,8 +1,6 @@
-const admin = require('firebase-admin');
 const axios = require('axios');
 
 const { config } = require('../config');
-const { firestoreInit } = require('../utils');
 const { initialize, getCollection, updateDocumentFromCollection } = require('../db/mongodb');
 
 function getCloudFunctionUrl (index) {
@@ -14,26 +12,28 @@ function getCloudFunctionUrl (index) {
   // TODO: Sacar a una .js separado de mongodbInit();
   const mongodb = await initialize();
   const mongodbCollection = await getCollection(mongodb, config.mongodb.database, config.mongodb.collection);
-  const mongodbCollectionError = await getCollection(mongodb, config.mongodb.database, config.mongodb.collectionError);
+  const mongodbCollectionUpdatedError = await getCollection(mongodb, config.mongodb.database, config.mongodb.collectionUpdatedError);
 
   // await mongodbInit();
-  await firestoreInit();
 
-  const reviews = await mongodbCollection.find({});
+  const allReviewsByIds = []
 
-  reviews.each(async (err, doc) => {
-    if (err) {
-      const errorLog = { index: doc.index, error: `${error}` };
-      await mongodbCollectionError.insertOne(errorLog);
-      await admin.firestore().collection(config.firestore.collectionError).doc(`${errorLog.index}`).set(log);
-    }
-    if (doc) {
-      const reviewRequest = await axios.get(getCloudFunctionUrl(doc.index));
+  await mongodbCollection.find({}).forEach(doc => {
+    allReviewsByIds.push(doc.index);
+  });
+
+  console.log(allReviewsByIds);
+
+  for (let index = 0; index < allReviewsByIds.length; index++) {
+    try {
+      const reviewRequest = await axios.get(getCloudFunctionUrl(allReviewsByIds[index]));
       const review = reviewRequest.data;
       await updateDocumentFromCollection(mongodbCollection, review.index, review, true);
-      await admin.firestore().collection(config.firestore.collection).doc(`${review.index}`).set(review);
-      console.log(`${review.index} | ${review.title} ==> upadated !!`);
+      console.log(`${review.index} | ${review.title} => Upadated`);
+    } catch (error) {
+      const log = { index, error: `${error}` };
+      await mongodbCollectionUpdatedError.insertOne(log);
     }
-  });
+  }
 
 })();
