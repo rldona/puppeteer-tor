@@ -4,7 +4,8 @@
   "description": "POC: using puppeteer with tor how proxy",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "dependencies": {
     "firebase-admin": "^9.4.2",
     "ipify": "^5.0.0",
+    "jest": "^26.6.3",
     "mongodb": "^3.6.3",
     "pm2": "^4.5.1",
     "puppeteer": "^5.5.0",

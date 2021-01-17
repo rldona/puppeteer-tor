@@ -33,8 +33,7 @@ const config = {
     }
   },
   sleep: {
-    shortMinutes: 5,
-    longMinutes: 60,
+    shortMinutes: 1,
     multipleCheck: 1000,
     milisecondsConverter: 60000
   },
