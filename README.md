@@ -1,13 +1,9 @@
-# puppeteer-tor
+# filmaffinity-scrapper-batch
 
-POC: using puppeteer with tor how proxy
-
-## TODO: cambiar el nombre del respositorio => filmaffinity-scrapper-batch
+POC: using puppeteer how batch process
 
 # Project Filmaffinity Scrapper:
 
-- filmaffinity-scrapper-batch
+- filmaffinity-scrapper-etl
 - filmaffinity-scrapper-function
 - filmaffinity-scrapper-api
-
-# TODO: unificar todo en un único repositiorio

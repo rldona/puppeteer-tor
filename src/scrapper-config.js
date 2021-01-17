@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-const { config, spanish } = require('../config');
+const { config, translations } = require('../config');
 const { getUrl } = require('../utils');
 const { getFilmaffinityReview } = require('./scrapper-page');
 const { updateDocumentFromCollection } = require('../db/mongodb');
@@ -23,8 +23,8 @@ async function scrapper (index, mongodbCollection, mongodbCollectionError) {
   await page.setViewport({ width: config.view.width, height: config.view.height });
   await page.setRequestInterception(config.setRequestInterception);
 
-  page.on(spanish.REQUEST, (request) => {
-    if (request.resourceType() === spanish.DOCUMENT) {
+  page.on(translations.es.REQUEST, (request) => {
+    if (request.resourceType() === translations.es.DOCUMENT) {
       request.continue();
     } else {
       request.abort();
@@ -34,7 +34,7 @@ async function scrapper (index, mongodbCollection, mongodbCollectionError) {
   const url = getUrl(index);
 
   try {
-    let browserLoad = await page.goto(url, { waitUntil: spanish.LOAD, timeout: 0 });
+    let browserLoad = await page.goto(url, { waitUntil: translations.es.LOAD, timeout: 0 });
 
     if (browserLoad.status() === 200) {
       const review = await getFilmaffinityReview(page);

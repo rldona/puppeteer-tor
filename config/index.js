@@ -1,16 +1,23 @@
-const language = 'es';
+const translations = {
+  es: {
+    'REQUEST': 'request',
+    'DOCUMENT': 'document',
+    'SCRAPPER': 'scrapper',
+    'LOAD': 'load',
+    'SLEEP_60_MINUTES': `\n Sleeping 60 minutes...\n`
+  }
+};
 
-const spanish = {
-  'REQUEST': 'request',
-  'DOCUMENT': 'document',
-  'SCRAPPER': 'scrapper',
-  'LOAD': 'load',
-  'SLEEP_60_MINUTES': `\n Sleeping 60 minutes...\n`
+const argsOptions = {
+  long: {
+    startProcess: parseInt(process.argv[3]) || null,
+    endProcess: parseInt(process.argv[4]) || null,
+  },
+  language: process.argv[2] || null
 }
 
 const config = {
-  language: language,
-  databaseURL: 'https://filmaffinity-api.firebaseio.com',
+  language: argsOptions.language,
   headless: true,
   ignoreHTTPSErrors: true,
   args: {
@@ -23,14 +30,8 @@ const config = {
     height: 2500
   },
   range: {
-    start: parseInt(process.argv[2]),
-    end: parseInt(process.argv[3])
-  },
-  proxy: {
-    range: {
-      min: 52,
-      max: 62
-    }
+    start: argsOptions.long.startProcess,
+    end: argsOptions.long.endProcess
   },
   sleep: {
     shortMinutes: 1,
@@ -39,13 +40,14 @@ const config = {
   },
   mongodb: {
     database: 'filmaffinity-db',
-    collection: `reviews-${language}`,
-    collectionError: `reviews-${language}-error`,
-    collectionUpdatedError: `reviews-${language}-updated-error`
+    collection: `reviews-${argsOptions.language}`,
+    collectionError: `reviews-${argsOptions.language}-error`,
+    collectionUpdatedError: `reviews-${argsOptions.language}-updated-error`
   }
 }
 
 module.exports = {
-  spanish,
+  translations,
+  argsOptions,
   config
 };
