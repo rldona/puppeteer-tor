@@ -35,12 +35,22 @@ async function updateDocumentFromCollection (collection, id, review, lastModifie
   await collection.updateOne (
     { 'index': id }, {
       $set: {
+        'title': review.title,
+        'duration': review.duration,
+        'year': review.year,
+        'directors': review.directors,
+        'credits': review.credits,
+        'casting': review.casting,
+        'producer': review.producer,
+        'genre': review.genre,
+        'genres': review.genres,
         'sinopsis': review.sinopsis,
+        'thumbnail_medium': review.thumbnail_medium,
         'rating_average': review.rating_average,
         'rating_count': review.rating_count,
         'professional_register': review.professional_register,
         'professional_reviews': review.professional_reviews,
-        'thumbnail_medium': review.thumbnail_medium,
+        'country': review.country,
         'thumbnail_large': review.thumbnail_large
       },
       $currentDate: {
@@ -49,6 +59,8 @@ async function updateDocumentFromCollection (collection, id, review, lastModifie
     }
   )
 }
+
+
 
 /**
  *

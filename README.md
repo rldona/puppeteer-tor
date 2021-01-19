@@ -15,6 +15,8 @@ POC: using puppeteer how batch process
 - pm2 start --name scrapper-es ./src/batch-long.js -- es 100000 1000000
 - pm2 start --name scrapper-en ./src/batch-long.js -- en 100000 1000000
 
+
+[DEPRECATED]
 ## Updater short process
 
 - pm2 start --name updater-es ./src/batch-short.js -- es

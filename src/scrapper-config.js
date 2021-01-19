@@ -33,21 +33,26 @@ async function scrapper (index, mongodbCollection, mongodbCollectionError) {
 
   const url = getUrl(index);
 
+  let state;
+
   try {
     let browserLoad = await page.goto(url, { waitUntil: translations.es.LOAD, timeout: 0 });
 
     if (browserLoad.status() === 200) {
       const review = await getFilmaffinityReview(page);
       const doc = { index, ...review, url };
+
       const item = await mongodbCollection.find({ 'index' : index }).limit(1).count();
 
       if (item) {
         await updateDocumentFromCollection(mongodbCollection, index, review, true);
+        state = 'updated';
       } else {
         await mongodbCollection.insertOne(doc);
+        state = 'new';
       }
 
-      console.log(`${browserLoad.status()} | ${index} | ${review.title}`);
+      console.log(`${browserLoad.status()} | ${index} | ${review.title} ==> ${state === 'updated' ? 'updated !' : 'new review !'}`);
     }
   } catch (error) {
     const log = { index, error: `${error}` };

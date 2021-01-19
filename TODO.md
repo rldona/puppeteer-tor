@@ -1,3 +1,7 @@
+[ ] Dejar de usar el proceso short y usar siempre el long.
+    [ ] Segun estadisticas en 1 días el batch hace el scrapping del 40%
+    [ ] En 2 días y medio posiblemnte haga el millon de registros
+    [ ] En una semana hace la versión española y la inglesa
 [ ] Cambiar el nombre del proyecto: filmaffinity-scrapper-etl
 [OK] Realizar una copia de seguridad de la base de datos y subir a: 1. Google Drive y 2. One Drive
     [OK] Manualmente: usando la Mongo Compass
