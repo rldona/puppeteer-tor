@@ -21,11 +21,15 @@ function getCloudFunctionUrl (index, language) {
 
   let allReviewsByIds = []
 
+  console.log('Recuperando documentos de Mongodb Atlas...');
+
   await mongodbCollection.find({}).forEach(doc => {
     allReviewsByIds.push(doc.index);
   });
 
   console.log(allReviewsByIds);
+
+  console.log(`Actualizando ${allReviewsByIds.length} documentos encontrados...`);
 
   let index = 0, loopCheck;
 
@@ -34,7 +38,7 @@ function getCloudFunctionUrl (index, language) {
       const reviewRequest = await axios.get(getCloudFunctionUrl(allReviewsByIds[index], argsOptions.language));
       const review = reviewRequest.data;
       await updateDocumentFromCollection(mongodbCollection, review.index, review, true);
-      console.log(`${review.index} | ${review.title} => Upadated`);
+      console.log(`${review.index} | ${review.title} => ¡actualizado!`);
     } catch (error) {
       const log = { index: allReviewsByIds[index], error: `${error}` };
       await mongodbCollectionUpdatedError.insertOne(log);
