@@ -1,6 +1,6 @@
 [ ] Cambiar el nombre del proyecto: filmaffinity-scrapper-etl
-[ ] Realizar una copia de seguridad de la base de datos y subir a: 1. Google Drive y 2. One Drive
-    [ ] Manualmente: usando la Mongo Compass
+[OK] Realizar una copia de seguridad de la base de datos y subir a: 1. Google Drive y 2. One Drive
+    [OK] Manualmente: usando la Mongo Compass
     [ ] Automatizado mediante un script que lo envie a un AWS S3 o bucket de Google Cloud
         [ ] ¿Es posible a Google Drive mediante su API? (investigar)
 [~] Realizar un script (batch) que cada cierto tiempo pase lo datos de las base de datos a un Elastic Search

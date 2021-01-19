@@ -1,9 +1,9 @@
-# filmaffinity-scrapper-batch
+# filmaffinity-scrapper-etl
 
 POC: using puppeteer how batch process
 
 # Project Filmaffinity Scrapper:
 
-- filmaffinity-scrapper-etl
-- filmaffinity-scrapper-function
-- filmaffinity-scrapper-api
+- filmaffinity-project-etl
+- filmaffinity-project-function
+- filmaffinity-project-api
